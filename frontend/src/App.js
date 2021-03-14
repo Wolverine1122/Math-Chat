@@ -6,9 +6,10 @@ function App() {
   const [state, setState] = useState("");
   const [messages, setMessages] = useState([]);
   const [nameModal, setNameModal] = useState(false);
+  const [name, setName] = useState("Anonim");
   const ws = useRef(null);
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:3000");
+    ws.current = new WebSocket("ws://192.168.1.97:3000");
     ws.current.onopen = () => console.log("ws opened");
     ws.current.onclose = () => console.log("ws closed");
 
@@ -24,6 +25,10 @@ function App() {
   return (
     <div>
       <button
+        class="waves-effect waves-light btn"
+        style={{
+          margin: "20px",
+        }}
         onClick={() => {
           setNameModal(true);
         }}
@@ -35,16 +40,65 @@ function App() {
         onClose={() => {
           setNameModal(false);
         }}
+        rememberName={(thisName) => {
+          setName(thisName);
+        }}
       ></Modal>
+      <div class="row">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "20px",
+          }}
+          class="col s6"
+        >
+          {messages
+            .filter((message) => {
+              return message.outter;
+            })
+            .map((message) => {
+              return (
+                <p>
+                  from: {message.name} {message.data}
+                </p>
+              );
+            })}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            padding: "20px",
+          }}
+          class="col s6"
+        >
+          {messages
+            .filter((message) => {
+              return !message.outter;
+            })
+            .map((messages) => {
+              return <p>{messages.data}</p>;
+            })}
+        </div>
+      </div>
       <form
+        style={{
+          position: "absolute",
+          bottom: "0",
+          width: "100%",
+          left: "0",
+          padding: "20px",
+        }}
         onSubmit={(event) => {
           event.preventDefault();
           setMessages((prev) => {
-            return [...prev, { name: "Me", data: state, outter: false }];
+            return [...prev, { data: state, outter: false }];
           });
           setState("");
           ws.current.send(
-            JSON.stringify({ name: "Vasilii", data: state, outter: true })
+            JSON.stringify({ name: name, data: state, outter: true })
           );
         }}
       >
@@ -54,17 +108,10 @@ function App() {
           }}
           value={state}
         ></input>
-        <button type="submit">Click me</button>
+        <button class="waves-effect waves-light btn" type="submit">
+          Send
+        </button>
       </form>
-      {messages.map((message) => {
-        return message.outter ? (
-          <p>
-            {message.name}: {message.data}
-          </p>
-        ) : (
-          <p>Me: {message.data}</p>
-        );
-      })}
     </div>
   );
 }

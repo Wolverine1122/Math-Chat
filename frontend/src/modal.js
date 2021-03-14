@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const modalStyles = {
   position: "fixed",
@@ -21,7 +21,8 @@ const outterStyles = {
   zIndex: 2,
 };
 
-function Modal({ open, onClose }) {
+function Modal({ open, onClose, rememberName }) {
+  const [name, setName] = useState("");
   return open ? (
     <>
       <div style={outterStyles}></div>
@@ -36,8 +37,27 @@ function Modal({ open, onClose }) {
         <div class="row">
           <div class="input-field col s8 offset-s1">
             <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text" class="validate" />
-            <label for="icon_prefix">Choose name</label>
+            <input
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+              id="icon_prefix"
+              type="text"
+              class="validate"
+            />
+            <label for="icon_prefix">name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col offset-s1">
+            <button
+              onClick={() => {
+                rememberName(name);
+              }}
+              class="waves-effect waves-light btn"
+            >
+              Remember Name
+            </button>
           </div>
         </div>
       </div>

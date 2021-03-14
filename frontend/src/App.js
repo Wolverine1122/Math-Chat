@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import Modal from "./modal";
+import Message from "./message";
 
 function App() {
   const [state, setState] = useState("");
@@ -44,43 +45,44 @@ function App() {
           setName(thisName);
         }}
       ></Modal>
-      <div class="row">
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "80%",
+          overflow: "scroll",
+        }}
+        class="row"
+      >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
             padding: "20px",
+            width: "50%",
           }}
           class="col s6"
         >
-          {messages
-            .filter((message) => {
-              return message.outter;
-            })
-            .map((message) => {
-              return (
-                <p>
-                  from: {message.name} {message.data}
-                </p>
-              );
-            })}
+          {messages.map((message) => {
+            return <Message message={message} left={true} />;
+          })}
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
+            flexWrap: "wrap",
             padding: "20px",
+            width: "50%",
           }}
           class="col s6"
         >
-          {messages
-            .filter((message) => {
-              return !message.outter;
-            })
-            .map((messages) => {
-              return <p>{messages.data}</p>;
-            })}
+          {messages.map((message) => {
+            return <Message message={message} left={false} />;
+          })}
         </div>
       </div>
       <form

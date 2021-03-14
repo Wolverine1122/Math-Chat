@@ -10,9 +10,12 @@ const wss = new WebSocket.Server({ server });
 
 wss.on("connection", (ws) => {
   ws.on("message", (data) => {
-    ws.send(`Hello it is me and my data is ${data}`);
+    wss.clients.forEach((client) => {
+      if (client !== ws) {
+        client.send(data);
+      }
+    });
   });
-  ws.send("Hello EveryOne");
 });
 
 const PORT = 3000;

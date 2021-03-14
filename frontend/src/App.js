@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
+import { addStyles, EditableMathField } from "react-mathquill";
 
 import Modal from "./modal";
 import Message from "./message";
+
+addStyles();
 
 function App() {
   const [state, setState] = useState("");
   const [messages, setMessages] = useState([]);
   const [nameModal, setNameModal] = useState(false);
   const [name, setName] = useState("Anonim");
+  const [latex, setLatex] = useState("");
   const ws = useRef(null);
   useEffect(() => {
     ws.current = new WebSocket("ws://192.168.1.97:3000");
@@ -25,6 +29,7 @@ function App() {
   }, []);
   return (
     <div>
+      <div></div>
       <button
         class="waves-effect waves-light btn"
         style={{
@@ -49,7 +54,7 @@ function App() {
         style={{
           position: "absolute",
           width: "100%",
-          height: "80%",
+          height: "70%",
           overflow: "scroll",
         }}
         class="row"
@@ -85,7 +90,7 @@ function App() {
           })}
         </div>
       </div>
-      <form
+      <div
         style={{
           position: "absolute",
           bottom: "0",
@@ -93,27 +98,66 @@ function App() {
           left: "0",
           padding: "20px",
         }}
-        onSubmit={(event) => {
-          event.preventDefault();
-          setMessages((prev) => {
-            return [...prev, { data: state, outter: false }];
-          });
-          setState("");
-          ws.current.send(
-            JSON.stringify({ name: name, data: state, outter: true })
-          );
-        }}
       >
-        <input
-          onChange={(event) => {
-            setState(event.target.value);
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setMessages((prev) => {
+              return [...prev, { data: latex, outter: false, latex: true }];
+            });
+            setLatex("");
+            ws.current.send(
+              JSON.stringify({
+                name: name,
+                data: latex,
+                outter: true,
+                latex: true,
+              })
+            );
           }}
-          value={state}
-        ></input>
-        <button class="waves-effect waves-light btn" type="submit">
-          Send
-        </button>
-      </form>
+        >
+          <EditableMathField
+            latex={latex}
+            onChange={(mathField) => {
+              setLatex(mathField.latex());
+            }}
+          />
+          <button
+            style={{ marginLeft: "25px" }}
+            class="waves-effect waves-light btn"
+            type="submit"
+          >
+            Send
+          </button>
+        </form>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setMessages((prev) => {
+              return [...prev, { data: state, outter: false, latex: false }];
+            });
+            setState("");
+            ws.current.send(
+              JSON.stringify({
+                name: name,
+                data: state,
+                outter: true,
+                latex: false,
+              })
+            );
+          }}
+        >
+          <input
+            onChange={(event) => {
+              setState(event.target.value);
+            }}
+            value={state}
+          ></input>
+          <button class="waves-effect waves-light btn" type="submit">
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

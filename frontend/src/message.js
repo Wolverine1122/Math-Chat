@@ -1,4 +1,5 @@
 import React from "react";
+import { StaticMathField } from "react-mathquill";
 
 function Message({ message, left }) {
   return (
@@ -19,7 +20,11 @@ function Message({ message, left }) {
       }}
     >
       <p>{message.outter ? message.name : "Me"}</p>
-      <h5>{message.data}</h5>
+      {message.latex ? (
+        <StaticMathField>{message.data}</StaticMathField>
+      ) : (
+        <h5>{message.data}</h5>
+      )}
     </div>
   );
 }

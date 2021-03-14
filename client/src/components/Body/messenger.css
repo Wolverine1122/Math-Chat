@@ -1,0 +1,48 @@
+.messenger {
+    flex-grow: 1;
+    padding: 20px 40px;
+    max-width: 60%;
+    border-right: 1px solid #303030;
+    position: relative;
+  }
+  .msg-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #303030;
+  }
+  .recipient {
+    display: flex;
+    align-items: center;
+  }
+  .recipient p {
+    margin: 0;
+    font-weight: 600;
+  }
+  .msg-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .msg-content {
+        height: 88%;
+  }
+
+    .msg-input {
+        bottom: 0;  
+        padding-top: 5px;
+  }
+  .send-msg {
+      padding: 0 10px;
+      background-color: #cccccc;
+      border-radius: 5px;
+      width: 100%;
+      bottom: 0;
+  }
+  
+.send-msg input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 5px 5px;
+}

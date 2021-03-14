@@ -1,0 +1,32 @@
+.conversations {
+    border-right: 1px solid #303030;
+    padding: 0 30px 0 0px;
+  }
+  .conversation-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000000;
+  }
+
+  .search-container {
+    background-color: #cccccc;
+    border-radius: 5px;
+  }
+  .search-container input {
+    background-color: transparent;
+    border: none;
+    padding: 15px 15px;
+    outline: none;
+    width: 80%;
+    padding-right: 0;
+  }
+  .search-btn {
+    height: 46px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    width: 20%;
+    cursor: pointer;
+    font-size: 20px;
+  }

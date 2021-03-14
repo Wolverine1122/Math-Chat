@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./mathquill.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="./mathquill.js"></script>
+    <script defer>
+      var MQ = MathQuill.getInterface(2);
+    </script>
+  </head>
+  <body>
+    <p>Type math here: <span id="math-field"></span></p>
+
+    <p><span id="answer" class="mq-editable-field mq-math-mode">x=</span></p>
+    <script>
+        var answerSpan = document.getElementById('answer');
+        var answerMathField = MQ.MathField(answerSpan, {
+            handlers: {
+            edit: function() {
+                var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
+                //checkAnswer(enteredMath);
+            }
+            }
+        });
+    </script>
+    </script>
+  </body>
+</html>

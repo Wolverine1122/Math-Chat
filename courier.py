@@ -7,12 +7,11 @@ resp = client.send(
     recipient="user",
     profile={
       "discord": {
-        "user_id": "697456609340817499"
+        "user_id": "680619300050174023"
       }
     },
     data={
-      "username1": "Vasilii",
-      "username2": "user"
+      "username1": "Name"
     }
 )
 
